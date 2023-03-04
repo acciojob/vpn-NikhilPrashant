@@ -22,17 +22,12 @@ public class ConnectionServiceImpl implements ConnectionService {
         User user = userRepository2.findById(userId).get();
         if (user.getMaskedIp() != null) throw new Exception("Already connected");
         if (user.getOriginalCountry().toString().equals(countryName)) {
-            System.out.println("Equal");
             return user;
         }
-        System.out.println("Not Equal");
-        System.out.println(user.getServiceProviderList().size());
         for (ServiceProvider serviceProvider: user.getServiceProviderList()) {
             System.out.println(serviceProvider);
             for (Country country: serviceProvider.getCountryList()) {
                 if (country.getCountryName().toString().equals(countryName)) {
-                    System.out.println(country.getCountryName().toString());
-                    System.out.println(countryName);
                     Connection connection = new Connection(user, serviceProvider);
                     user.setConnected(true);
                     user.setMaskedIp(country.getCode() + "." + serviceProvider.getId() + "." + userId);
