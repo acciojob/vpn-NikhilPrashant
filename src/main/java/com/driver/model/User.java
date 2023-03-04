@@ -23,7 +23,7 @@ public class User {
 
     @ManyToMany
     @JoinColumn
-    List<ServiceProvider> serviceProviders = new ArrayList<>();
+    List<ServiceProvider> serviceProviderList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Connection> connectionList = new ArrayList<>();
@@ -34,14 +34,14 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, String originalIp, String maskedIp, boolean connected, List<ServiceProvider> serviceProviders, List<Connection> connectionList, Country OriginalCountry) {
+    public User(int id, String username, String password, String originalIp, String maskedIp, boolean connected, List<ServiceProvider> serviceProviderList, List<Connection> connectionList, Country OriginalCountry) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.originalIp = originalIp;
         this.maskedIp = maskedIp;
         this.connected = connected;
-        this.serviceProviders = serviceProviders;
+        this.serviceProviderList = serviceProviderList;
         this.connectionList = connectionList;
         this.originalCountry = originalCountry;
     }
@@ -93,7 +93,7 @@ public class User {
         this.maskedIp = maskedIp;
     }
 
-    public boolean isConnected() {
+    public boolean getConnected() {
         return connected;
     }
 
@@ -101,12 +101,12 @@ public class User {
         this.connected = connected;
     }
 
-    public List<ServiceProvider> getServiceProviders() {
-        return serviceProviders;
+    public List<ServiceProvider> getServiceProviderList() {
+        return serviceProviderList;
     }
 
-    public void setServiceProviders(List<ServiceProvider> serviceProviders) {
-        this.serviceProviders = serviceProviders;
+    public void setServiceProviderList(List<ServiceProvider> serviceProviderList) {
+        this.serviceProviderList = serviceProviderList;
     }
 
     public List<Connection> getConnectionList() {

@@ -60,7 +60,7 @@ public class Admin {
         return serviceProviders;
     }
 
-    public void setServiceProviderList(List<ServiceProvider> serviceProviderList) {
+    public void setServiceProviders(List<ServiceProvider> serviceProviderList) {
         this.serviceProviders = serviceProviders;
     }
 }
