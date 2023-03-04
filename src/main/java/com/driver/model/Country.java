@@ -35,6 +35,12 @@ public class Country {
         this.serviceProvider = serviceProvider;
     }
 
+    public Country(CountryName countryName, String code, ServiceProvider serviceProvider) {
+        this.countryName = countryName;
+        this.code = code;
+        this.serviceProvider = serviceProvider;
+    }
+
     public Country(CountryName countryName, String code) {
         this.countryName = countryName;
         this.code = code;
@@ -54,11 +60,6 @@ public class Country {
 
     public void setCountryName(CountryName countryName) {
         this.countryName = countryName;
-    }
-
-    public Country(CountryName countryName, ServiceProvider serviceProvider) {
-        this.countryName = countryName;
-        this.serviceProvider = serviceProvider;
     }
 
     public String getCode() {

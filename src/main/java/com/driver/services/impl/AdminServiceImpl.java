@@ -36,29 +36,18 @@ public class AdminServiceImpl implements AdminService {
     public Admin addServiceProvider(int adminId, String providerName) {
         Admin admin = adminRepository1.findById(adminId).get();
         ServiceProvider serviceProvider = new ServiceProvider(providerName, admin);
-        List<ServiceProvider> serviceProviderList = admin.getServiceProviders();
-        if (serviceProviderList == null) {
-            serviceProviderList = new ArrayList<ServiceProvider>();
-        }
-        serviceProviderList.add(serviceProvider);
-        admin.setServiceProviders(serviceProviderList);
+        admin.getServiceProviders().add(serviceProvider);
         adminRepository1.save(admin);
         return admin;
     }
 
     @Override
     public ServiceProvider addCountry(int serviceProviderId, String countryName) throws Exception{
-        if (CountryName.valueOf(countryName).toString() != countryName) throw new Exception("Country not found");
+        String countryName1 = countryName.toUpperCase();
+        if (!countryName1.equals("IND") && !countryName1.equals("USA") && !countryName1.equals("AUS") && !countryName1.equals("CHI") && !countryName1.equals("JPN")) throw new Exception("Country not found");
         ServiceProvider serviceProvider = serviceProviderRepository1.findById(serviceProviderId).get();
-        if (serviceProvider == null) throw new Exception("Invalid serviceproviderId");
-        CountryName countryName1 = CountryName.valueOf(countryName);
-        Country country = new Country(countryName1, serviceProvider);
-        List<Country> countryList = serviceProvider.getCountryList();
-        if (countryList == null) {
-            countryList = new ArrayList<Country>();
-        }
-        countryList.add(country);
-        serviceProvider.setCountryList(countryList);
+        Country country = new Country(CountryName.valueOf(countryName1), CountryName.valueOf(countryName1).toCode(), serviceProvider);
+        serviceProvider.getCountryList().add(country);
         serviceProviderRepository1.save(serviceProvider);
         return serviceProvider;
     }

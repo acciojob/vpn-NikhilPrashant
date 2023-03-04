@@ -46,11 +46,9 @@ public class User {
         this.originalCountry = originalCountry;
     }
 
-    public User(String username, String password, String originalIp, Country originalCountry) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.originalIp = originalIp;
-        this.originalCountry = originalCountry;
     }
 
     public int getId() {

@@ -25,17 +25,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(String username, String password, String countryName) throws Exception{
-        if (CountryName.valueOf(countryName).toString() != countryName) throw new Exception("Country not found");
-        List<Country> countryList = countryRepository3.findAll();
-        for (Country country: countryList) {
-            if (country.getCountryName().toString().equals(countryName)) {
-                String countryCode = CountryName.valueOf(countryName).toCode();
-                User user = new User(username, password, countryCode, country);
-                userRepository3.save(user);
-                return user;
-            }
-        }
-        return new User();
+        String countryName1 = countryName.toUpperCase();
+        if (!countryName1.equals("IND") && !countryName1.equals("USA") && !countryName1.equals("AUS") && !countryName1.equals("CHI") && !countryName1.equals("JPN")) throw new Exception("Country not found");
+        Country country = new Country(CountryName.valueOf(countryName1), CountryName.valueOf(countryName1).toCode());
+        User user = new User(username, password);
+        country.setUser(user);
+        user.setOriginalCountry(country);
+        user = userRepository3.save(user);
+        user.setOriginalIp(country.getCode() + "." + user.getId());
+        userRepository3.save(user);
+        return user;
     }
 
     @Override
@@ -44,6 +43,7 @@ public class UserServiceImpl implements UserService {
         ServiceProvider serviceProvider = serviceProviderRepository3.findById(serviceProviderId).get();
         user.getServiceProviderList().add(serviceProvider);
         serviceProvider.getUsers().add(user);
+        serviceProviderRepository3.save(serviceProvider);
         return user;
     }
 }
