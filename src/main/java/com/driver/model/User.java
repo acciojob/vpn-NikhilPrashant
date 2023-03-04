@@ -22,7 +22,7 @@ public class User {
     private boolean connected;
 
     @ManyToMany
-    List<ServiceProvider> serviceProviderList = new ArrayList<>();
+    List<ServiceProvider> serviceProviders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Connection> connectionList = new ArrayList<>();
@@ -34,14 +34,14 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, String originalIp, String maskedIp, boolean connected, List<ServiceProvider> serviceProviderList, List<Connection> connectionList, Country country) {
+    public User(int id, String username, String password, String originalIp, String maskedIp, boolean connected, List<ServiceProvider> serviceProviders, List<Connection> connectionList, Country country) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.originalIp = originalIp;
         this.maskedIp = maskedIp;
         this.connected = connected;
-        this.serviceProviderList = serviceProviderList;
+        this.serviceProviders = serviceProviders;
         this.connectionList = connectionList;
         this.country = country;
     }
@@ -101,12 +101,12 @@ public class User {
         this.connected = connected;
     }
 
-    public List<ServiceProvider> getServiceProviderList() {
-        return serviceProviderList;
+    public List<ServiceProvider> getServiceProviders() {
+        return serviceProviders;
     }
 
-    public void setServiceProviderList(List<ServiceProvider> serviceProviderList) {
-        this.serviceProviderList = serviceProviderList;
+    public void setServiceProviders(List<ServiceProvider> serviceProviders) {
+        this.serviceProviders = serviceProviders;
     }
 
     public List<Connection> getConnectionList() {
@@ -117,11 +117,12 @@ public class User {
         this.connectionList = connectionList;
     }
 
-    public Country getCountry() {
+    public Country getOriginalCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setOriginalCountry(Country country) {
         this.country = country;
     }
+
 }
