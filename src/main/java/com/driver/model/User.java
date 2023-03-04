@@ -99,6 +99,8 @@ public class User {
         this.connected = connected;
     }
 
+
+
     public List<ServiceProvider> getServiceProviderList() {
         return serviceProviderList;
     }
