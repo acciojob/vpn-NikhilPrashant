@@ -20,7 +20,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Override
     public User connect(int userId, String countryName) throws Exception {
         User user = userRepository2.findById(userId).get();
-        if (user.getConnected() == true) throw new Exception("Already connected");
+        if (user.getMaskedIp() != null) throw new Exception("Already connected");
         if (user.getOriginalCountry().toString().equals(countryName)) {
             System.out.println("Equal");
             return user;
@@ -49,7 +49,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Override
     public User disconnect(int userId) throws Exception {
         User user = userRepository2.findById(userId).get();
-        if (user.getConnected() == false) throw new Exception("Already disconnected");
+        if (user.getMaskedIp() == null) throw new Exception("Already disconnected");
         user.setConnected(false);
         user.setMaskedIp(null);
         userRepository2.save(user);
