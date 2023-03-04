@@ -25,7 +25,6 @@ public class ConnectionServiceImpl implements ConnectionService {
             return user;
         }
         for (ServiceProvider serviceProvider: user.getServiceProviderList()) {
-            System.out.println(serviceProvider);
             for (Country country: serviceProvider.getCountryList()) {
                 if (country.getCountryName().toString().equals(countryName)) {
                     Connection connection = new Connection(user, serviceProvider);
