@@ -45,10 +45,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             Connection connection = new Connection();
             connection.setUser(user);
             connection.setServiceProvider(serviceProvider);
-            String cc = country.getCode();
-            int givenId = serviceProvider.getId();
-            String mask = cc + "." + givenId + "." + userId;
-            user.setMaskedIp(mask);
+            user.setMaskedIp(country.getCode() + "." + serviceProvider.getId() + "." + userId);
             user.setConnected(true);
             user.getConnectionList().add(connection);
             serviceProvider.getConnectionList().add(connection);
@@ -74,25 +71,18 @@ public class ConnectionServiceImpl implements ConnectionService {
     public User communicate(int senderId, int receiverId) throws Exception {
         User user = userRepository2.findById(senderId).get();
         User user1 = userRepository2.findById(receiverId).get();
-
         if (user1.getMaskedIp() != null) {
             String str = user1.getMaskedIp();
-            String cc = str.substring(0, 3);
-            cc = cc.toUpperCase();
-
-            if (cc.equals(user.getOriginalCountry().getCode()))
-                return user;
-            else {
-                String countryName = "";
-                CountryName[] countryNames = CountryName.values();
-                for (CountryName countryName1 : countryNames) {
-                    if (countryName1.toCode().toString().equals(cc)) countryName = countryName1.toString();
-                }
-                User user2 = connect(senderId, countryName);
-                if (!user2.getConnected()) {
-                    throw new Exception("Cannot establish communication");
-                } else return user2;
-            }
+            String code = str.substring(0, 3);
+            code = code.toUpperCase();
+            if (code.equals(user.getOriginalCountry().getCode())) return user;
+            String countryName = "";
+            CountryName[] countryNames = CountryName.values();
+            for (CountryName countryName1 : countryNames)
+                if (countryName1.toCode().toString().equals(code)) countryName = countryName1.toString();
+            user = connect(senderId, countryName);
+            if (!user.getConnected()) throw new Exception("Cannot establish communication");
+            return user;
         }
         if (user1.getOriginalCountry().equals(user.getOriginalCountry())) return user;
         String countryName = user1.getOriginalCountry().getCountryName().toString();
