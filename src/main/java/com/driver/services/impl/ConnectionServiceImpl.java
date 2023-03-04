@@ -1,19 +1,12 @@
 package com.driver.services.impl;
 
-import com.driver.Entities.Connection;
-import com.driver.Entities.Country;
-import com.driver.Entities.ServiceProvider;
-import com.driver.Entities.User;
 import com.driver.model.*;
 import com.driver.repository.ConnectionRepository;
-import com.driver.repository.CountryRepository;
 import com.driver.repository.ServiceProviderRepository;
 import com.driver.repository.UserRepository;
 import com.driver.services.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
@@ -35,6 +28,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                     country.getUserList().add(user);
                     serviceProvider.getUserList().add(user);
                     user.setConnected(true);
+                    user.setMaskedIp(CountryName.valueOf(countryName).toCode());
                     Connection connection = new Connection(user, serviceProvider);
                     serviceProvider.getConnectionList().add(connection);
                     return user;

@@ -1,9 +1,9 @@
 package com.driver.services.impl;
 
-import Enums.CountryName;
-import com.driver.Entities.Admin;
-import com.driver.Entities.Country;
-import com.driver.Entities.ServiceProvider;
+import com.driver.model.Admin;
+import com.driver.model.Country;
+import com.driver.model.ServiceProvider;
+import com.driver.model.CountryName;
 import com.driver.repository.AdminRepository;
 import com.driver.repository.CountryRepository;
 import com.driver.repository.ServiceProviderRepository;

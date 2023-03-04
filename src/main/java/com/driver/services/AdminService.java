@@ -1,7 +1,7 @@
 package com.driver.services;
 
-import com.driver.Entities.Admin;
-import com.driver.Entities.ServiceProvider;
+import com.driver.model.Admin;
+import com.driver.model.ServiceProvider;
 
 public interface AdminService {
 

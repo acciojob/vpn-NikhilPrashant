@@ -1,9 +1,9 @@
 package com.driver.services.impl;
 
-import Enums.CountryName;
-import com.driver.Entities.Country;
-import com.driver.Entities.ServiceProvider;
-import com.driver.Entities.User;
+import com.driver.model.Country;
+import com.driver.model.CountryName;
+import com.driver.model.ServiceProvider;
+import com.driver.model.User;
 import com.driver.repository.CountryRepository;
 import com.driver.repository.ServiceProviderRepository;
 import com.driver.repository.UserRepository;
@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
         List<Country> countryList = countryRepository3.findAll();
         for (Country country: countryList) {
             if (country.getCountryName().toString().equals(countryName)) {
-                User user = new User(username, password, "countryCode.userId", country);
+                String countryCode = CountryName.valueOf(countryName).toCode();
+                User user = new User(username, password, countryCode, country);
                 userRepository3.save(user);
                 return user;
             }
