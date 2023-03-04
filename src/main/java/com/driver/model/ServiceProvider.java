@@ -15,25 +15,25 @@ public class ServiceProvider {
 
     @ManyToOne
     @JoinColumn
-    Admin admin;
+    private Admin admin;
 
-    @ManyToMany
-    List<User> userList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    List<Connection> connectionList = new ArrayList<>();
+    @ManyToMany(mappedBy = "serviceProviders", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    List<Country> countryList = new ArrayList<>();
+    private List<Connection> connectionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
+    private List<Country> countryList = new ArrayList<>();
 
     public ServiceProvider() {
     }
 
-    public ServiceProvider(int id, String name, Admin admin, List<User> userList, List<Connection> connectionList, List<Country> countryList) {
+    public ServiceProvider(int id, String name, Admin admin, List<User> users, List<Connection> connectionList, List<Country> countryList) {
         this.id = id;
         this.name = name;
         this.admin = admin;
-        this.userList = userList;
+        this.users = users;
         this.connectionList = connectionList;
         this.countryList = countryList;
     }
@@ -67,12 +67,12 @@ public class ServiceProvider {
         this.admin = admin;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public List<Connection> getConnectionList() {

@@ -13,13 +13,12 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "country_name", unique = true)
     private CountryName countryName;
     private String code;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-    List<User> userList = new ArrayList<>();
+    @OneToOne
+    @JoinColumn
+    private User user;
 
     @ManyToOne
     @JoinColumn
@@ -28,17 +27,17 @@ public class Country {
     public Country() {
     }
 
-    public Country(int id, CountryName countryName, String code, List<User> userList, ServiceProvider serviceProvider) {
+    public Country(int id, CountryName countryName, String code, User user, ServiceProvider serviceProvider) {
         this.id = id;
         this.countryName = countryName;
         this.code = code;
-        this.userList = userList;
+        this.user = user;
         this.serviceProvider = serviceProvider;
     }
 
-    public Country(CountryName countryName, ServiceProvider serviceProvider) {
+    public Country(CountryName countryName, String code) {
         this.countryName = countryName;
-        this.serviceProvider = serviceProvider;
+        this.code = code;
     }
 
     public int getId() {
@@ -57,6 +56,11 @@ public class Country {
         this.countryName = countryName;
     }
 
+    public Country(CountryName countryName, ServiceProvider serviceProvider) {
+        this.countryName = countryName;
+        this.serviceProvider = serviceProvider;
+    }
+
     public String getCode() {
         return code;
     }
@@ -65,12 +69,12 @@ public class Country {
         this.code = code;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ServiceProvider getServiceProvider() {

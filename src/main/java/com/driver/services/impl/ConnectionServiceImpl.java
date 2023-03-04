@@ -25,8 +25,8 @@ public class ConnectionServiceImpl implements ConnectionService {
         for (ServiceProvider serviceProvider: user.getServiceProviders()) {
             for (Country country: serviceProvider.getCountryList()) {
                 if (country.getCountryName().toString().equals(countryName)) {
-                    country.getUserList().add(user);
-                    serviceProvider.getUserList().add(user);
+                    country.setUser(user);
+                    serviceProvider.getUsers().add(user);
                     user.setConnected(true);
                     user.setMaskedIp(CountryName.valueOf(countryName).toCode());
                     Connection connection = new Connection(user, serviceProvider);
@@ -49,6 +49,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     public User communicate(int senderId, int receiverId) throws Exception {
         User sender = userRepository2.findById(senderId).get();
         User reciever = userRepository2.findById(receiverId).get();
+        //for later
         return sender;
     }
 }
