@@ -1,7 +1,12 @@
 package com.driver.services.impl;
 
+import com.driver.Entities.Connection;
+import com.driver.Entities.Country;
+import com.driver.Entities.ServiceProvider;
+import com.driver.Entities.User;
 import com.driver.model.*;
 import com.driver.repository.ConnectionRepository;
+import com.driver.repository.CountryRepository;
 import com.driver.repository.ServiceProviderRepository;
 import com.driver.repository.UserRepository;
 import com.driver.services.ConnectionService;
@@ -20,15 +25,36 @@ public class ConnectionServiceImpl implements ConnectionService {
     ConnectionRepository connectionRepository2;
 
     @Override
-    public User connect(int userId, String countryName) throws Exception{
-
+    public User connect(int userId, String countryName) throws Exception {
+        User user = userRepository2.findById(userId).get();
+        if (user.isConnected()) throw new Exception("Already connected");
+        if (user.getCountry().toString().equals(countryName)) return user;
+        for (ServiceProvider serviceProvider: user.getServiceProviderList()) {
+            for (Country country: serviceProvider.getCountryList()) {
+                if (country.getCountryName().toString().equals(countryName)) {
+                    country.getUserList().add(user);
+                    serviceProvider.getUserList().add(user);
+                    user.setConnected(true);
+                    Connection connection = new Connection(user, serviceProvider);
+                    serviceProvider.getConnectionList().add(connection);
+                    return user;
+                }
+            }
+        }
+        throw new Exception("Unable to connect");
     }
     @Override
     public User disconnect(int userId) throws Exception {
-
+        User user = userRepository2.findById(userId).get();
+        if (!user.isConnected()) throw new Exception("Already disconnected");
+        user.setConnected(false);
+        user.setMaskedIp(null);
+        return user;
     }
     @Override
     public User communicate(int senderId, int receiverId) throws Exception {
-
+        User sender = userRepository2.findById(senderId).get();
+        User reciever = userRepository2.findById(receiverId).get();
+        return sender;
     }
 }
