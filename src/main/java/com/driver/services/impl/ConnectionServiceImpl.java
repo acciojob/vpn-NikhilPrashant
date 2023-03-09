@@ -86,7 +86,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             } catch (Exception e) {
                 throw new Exception("Cannot establish communication");
             }
-            if (!user.getConnected()) throw new Exception("Cannot establish communication");
+            if (!user.getConnected()) throw new Exception("Unable to connect");
             return user;
         }
         if (user1.getOriginalCountry().equals(user.getOriginalCountry())) return user;
@@ -96,7 +96,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         } catch (Exception e) {
             throw new Exception("Cannot establish communication");
         }
-        if (!user.getConnected()) throw new Exception("Cannot establish communication");
+        if (!user.getConnected()) throw new Exception("Unable to connect");
         else return user;
     }
 }
