@@ -96,6 +96,6 @@ public class ConnectionServiceImpl implements ConnectionService {
         } catch (Exception e) {
             if (!user.getConnected()) throw new Exception("Cannot establish communication");
         }
-        else return user;
+        return user;
     }
 }
